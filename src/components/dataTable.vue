@@ -2,12 +2,6 @@
   <div>
     <!-- Retirar o botao do componente 'register-form' e colocar no dataTable que faz a cahamada -->
     <el-button type="primary" @click="flag = true">New Register</el-button>
-  
-    <register-form
-      :flagVisible="flag"
-      @submit="onModalDialogSubmit"
-      @close="flag = false">
-    </register-form>
 
     <el-row :gutter="20" type="flex" justify="center">
       <el-col :span="16">
@@ -31,12 +25,13 @@
             <template slot-scope="scope">
               <el-button
                 size="mini"
-                @click="handleEdit(scope.$index, scope.row)">Edit</el-button>
+                @click="sendEdit(scope.$index, scope.row)">Edit</el-button>
               <el-button
                 size="mini"
                 type="danger"
-                @click="handleDelete(scope.$index, scope.row)">Delete</el-button>
+                @click="handleDelete(scope.$index)">Delete</el-button>
             </template>
+              <register-form :flagVisible="flag" @submit="onModalDialogSubmit" @editar="handleUpdate" @close="flag = false"></register-form>
           </el-table-column>
         </el-table>
       </el-col>
@@ -60,12 +55,13 @@ export default {
       flag: false
     }
   },
+
   methods: {
     onValidation() {
     },
+
     // Mudar nome desta função
     onModalDialogSubmit (data) {
-      debugger
       this.recordData.push({...data})
     },
 
@@ -73,12 +69,19 @@ export default {
       this.flag = false
     },
 
-    handleEdit(index, row) {
-      this.flag = !this.flag
-      console.log(index, row);
+    handleUpdate (data = {}, index) {
+      debugger
+      this.recordData.splice(index, 1, ...data)
     },
-    handleDelete(index, row) {
-      console.log(index, row);
+
+    sendEdit(index, row) {
+      debugger
+      this.$root.$emit('edit', row, index)
+      this.flag = !this.flag
+    },
+
+    handleDelete(index) {
+      this.recordData.splice(index, 1)
     }
   }
 }
