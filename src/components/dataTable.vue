@@ -7,6 +7,7 @@
       <el-col :span="16">
         <el-table
           :data="recordData"
+          :row-class-name="tableRowClassName"
           style="width: 100%">
           <el-table-column
             label="Nome"
@@ -57,11 +58,18 @@ export default {
   },
 
   methods: {
-    onValidation() {
+    tableRowClassName ({row, rowIndex}) {
+      debugger
+      // this.getCodeValue(row.telefone)
+      return 'success-row'
     },
 
-    // Mudar nome desta função
+    getCodeValue (numberTel) {
+      return numberTel.replace(/\D/g,"").slice(0, 2)
+    },
+
     onModalDialogSubmit (data) {
+      // this.getCodeValue(data.telefone)
       this.recordData.push({...data})
     },
 
@@ -70,12 +78,10 @@ export default {
     },
 
     handleUpdate (data = {}, index) {
-      debugger
       this.recordData.splice(index, 1, ...data)
     },
 
     sendEdit(index, row) {
-      debugger
       this.$root.$emit('edit', row, index)
       this.flag = !this.flag
     },
@@ -86,3 +92,9 @@ export default {
   }
 }
 </script>
+
+<style scoped>
+  .el-table .success-row {
+    background: #2b2bd1;
+  }
+</style>
