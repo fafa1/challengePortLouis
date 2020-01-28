@@ -46,9 +46,45 @@ export default {
   },
 
   methods: {
-    // chama a função que manda os dados para o dataTable para atualizar, se for a flag de atualizar
+    onValidationName() {
+      let sizeName, character
+      const minCharacters = new RegExp(/(.*[a-z]){3}/i)
+
+      const nameS = this.form.name.split(' ')
+      sizeName = nameS.length
+
+      if (sizeName === 1) {
+        alert('Porfavor insire Nome e Sobrenome')
+      }
+
+      nameS.forEach(nome => {
+        character = minCharacters.test(nome)
+
+        if(character === false) {
+          alert('Nome e Sobrenome Precisa no mínimo de 3 letras')
+          return false
+        }
+      })
+
+      return {
+        character,
+        sizeName
+      }
+    },
+
+    onValidationTephone(tel) {
+      tel=tel.replace(/\D/g,"")
+      tel=tel.replace(/^(\d{2})(\d)/g,"($1)$2")
+      tel=tel.replace(/(\d)(\d{4})$/,"$1-$2")
+
+      this.form.telefone = tel
+    },
+
     onSubmit () {
-        debugger
+      const { character, sizeName } = this.onValidationName()
+
+      if (character === false || sizeName === 1) return
+
       if (this.indice !== '') {
         const rowData = {
           name: this.form.name,
@@ -68,10 +104,8 @@ export default {
     }
   },
 
-  // Depois ver a possiblidade de criar um funçao dentro do computed e char no watch - encapsular o $roo.emit nma funcao
   watch: {
     flagVisible () {
-      debugger
       this.isVisibleFlag = this.flagVisible
 
       if (this.isVisibleFlag === false) {
@@ -84,6 +118,10 @@ export default {
         this.form.telefone = row.telefone
         this.indice = index
       })
+    },
+
+    'form.telefone' () {
+      this.onValidationTephone(this.form.telefone)
     }
   }
 }
