@@ -1,6 +1,5 @@
 <template>
   <div>
-    <!-- Retirar o botao do componente 'register-form' e colocar no dataTable que faz a cahamada -->
     <el-button type="primary" @click="flag = true">New Register</el-button>
 
     <el-row :gutter="20" type="flex" justify="center">
@@ -10,11 +9,11 @@
           :row-class-name="tableRowClassName"
           style="width: 100%">
           <el-table-column
-            label="Nome"
+            label="Name"
             prop="name">
           </el-table-column>
           <el-table-column
-            label="Telefone"
+            label="telephone"
             prop="telefone">
           </el-table-column>
           <el-table-column
@@ -58,10 +57,9 @@ export default {
   },
 
   methods: {
-    tableRowClassName ({row, rowIndex}) {
-      debugger
-      // this.getCodeValue(row.telefone)
-      return 'success-row'
+    tableRowClassName ({ row, rowIndex }) {
+      let areaCode =this.getCodeValue(row.telefone)
+      if (areaCode === '11') return 'success-row'
     },
 
     getCodeValue (numberTel) {
@@ -69,21 +67,20 @@ export default {
     },
 
     onModalDialogSubmit (data) {
-      // this.getCodeValue(data.telefone)
-      this.recordData.push({...data})
+      this.recordData.push({ ...data })
     },
 
     onModalDialogClose () {
       this.flag = false
     },
 
-    handleUpdate (data = {}, index) {
-      this.recordData.splice(index, 1, ...data)
-    },
-
     sendEdit(index, row) {
       this.$root.$emit('edit', row, index)
       this.flag = !this.flag
+    },
+
+    handleUpdate (data = {}, index) {
+      this.recordData.splice(index, 1, ...data)
     },
 
     handleDelete(index) {
@@ -93,8 +90,8 @@ export default {
 }
 </script>
 
-<style scoped>
+<style>
   .el-table .success-row {
-    background: #2b2bd1;
+    background: #eceef3;
   }
 </style>
