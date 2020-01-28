@@ -2,7 +2,7 @@
 
 > challeng github
 
-Neste desafio foi utilizado como estilizador dos componentes [Element.io](https://element.eleme.io/#/en-US)
+Neste desafio foi utilizado o [Element.io](https://element.eleme.io/#/en-US) uma biblioteca de componentes para Vue.js
 
 ## Build Setup
 
