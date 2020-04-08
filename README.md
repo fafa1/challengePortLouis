@@ -10,6 +10,10 @@ Neste desafio foi utilizado o [Element.io](https://element.eleme.io/#/en-US) uma
 ### Adicionar um novo registro
 ![](/src/imagesReadme/add_register.png)
 
+### Tecnologias utilizadas
+
+- Vue.js
+
 ## Build Setup
 
 ``` bash
